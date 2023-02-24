@@ -6,7 +6,8 @@ const enterPlate = document.querySelector("#enter-plate");
 const button = document.querySelector("#button");
 
 const plate = enterPlate.value;
-
+console.log(plate);
+const regEx = /^[\d]{4}\-[\D]{4}$/;
 //arrays:
 
 const arrayCars = [
@@ -74,9 +75,18 @@ const arrayHasFines = [
 ];
 
 // eventlistener
-button.addEventListener("click", () => validatePlate(plate));
+button.addEventListener("click", () => {
+  print(plate);
+});
 
-const validatePlate = async (plate) => {};
+const validatePlate = async (plate) => {
+  let validPlate = regEx.test(plate);
+  if (validPlate == true) {
+    return validPlate;
+  } else {
+    throw `The plate you entered is not a valid plate`;
+  }
+};
 
 const deAlta = async (plate) => {
   let carDeAlta = arrayCars.find((item) => item.plate == plate)?.alta;
@@ -110,13 +120,16 @@ const hasFines = async (plate, owner) => {
 };
 
 const getData = async (plate) => {
+  row.innerHTML = "";
+  errorMessage.innerHTML = "";
   let arrayResults = [];
   try {
-    const isCarDeAlta = await deAlta(plate);
-    const owner = await hasOwner(plate);
-    arrayResults.push(plate);
+    const validPlate = await validatePlate(plate);
+    const isCarDeAlta = await deAlta(validPlate);
+    const owner = await hasOwner(validPlate);
+    arrayResults.push(validPlate);
     arrayResults.push(owner);
-    const numFines = await hasFines(plate, owner);
+    const numFines = await hasFines(validPlate, owner);
     arrayResults.push(numFines);
   } catch (error) {
     printErrors(error);
@@ -148,5 +161,3 @@ const print = async (plate) => {
     row.append(data1, data2, data3, data4, data5, data6);
   }
 };
-
-print(plate);
