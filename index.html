@@ -8,22 +8,19 @@
     <link rel="stylesheet" href="src/styles.css" />
   </head>
   <body>
+    <h1>Fine check by number plate</h1>
     <form id="form">
-      <input type="text" id="enter-plate" placeholder="Enter number plate" />
-      <div id="button">Comprobar</div>
+      <input
+        type="text"
+        name="plate-field"
+        id="plate-field"
+        placeholder="Enter number plate"
+      />
+      <input type="submit" value="Check" id="submit" />
     </form>
     <div id="error-message"></div>
-    <table id="table">
-      <tr>
-        <th>Number Plate</th>
-        <th>Model</th>
-        <th>Owner</th>
-        <th>Owner Tel.</th>
-        <th>Owner Add.</th>
-        <th>Fines</th>
-      </tr>
-      <tr id="row"></tr>
-    </table>
+    <table id="table"></table>
+    <button id="delete-button">Clear Table</button>
     <script src="src/mains.js"></script>
   </body>
 </html>
